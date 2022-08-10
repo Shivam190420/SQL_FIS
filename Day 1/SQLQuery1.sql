@@ -1,11 +1,9 @@
--- create database SQL_Training
 create database SQL_Training;
 
 
--- use database SQL_Training
 use SQL_Training
 
--- create table Department
+
 create table table_Dept
 (
 	DeptNo int primary key,
@@ -13,7 +11,8 @@ create table table_Dept
 	Loc varchar(30)
 )
 
--- create table Employee
+---------------------------------------------------
+
 create table table_Emp
 (  EmpNo int Primary Key,
    EName varchar(30),
@@ -25,19 +24,15 @@ create table table_Emp
    DeptNo int references table_Dept(DeptNo)
 )
 
--- Select everthing (formatted date) from table Employee
-select EmpNo, EName, Job, MgrId, Format(HireDate,'dd-MMM-yy'), Salary, Comm, DeptNo from table_Emp;
+-------------------------------------------------------------------------------------------------
 
--- Select everything from table Department
-select * from table_Dept;
-
---Insert into table Department
 insert into table_Dept Values(10,'ACCOUNTING','NEW YORK'),
 (20,'RESEARCH','DALLAS'),
 (30,'SALES','CHICAGO'),
 (40,'OPERATIONS','BOSTON')
 
--- Insert into table Employee
+----------------------------------------------------------------------------------------------
+
 Insert into table_Emp Values(7369,'SMITH','CLERK',7902,'1980-12-17',800,NULL,20)
 
 Insert into table_Emp Values(7499,'ALLEN','SALESMAN',7698,'1981-02-20',1600,300,30),
@@ -54,16 +49,21 @@ Insert into table_Emp Values(7499,'ALLEN','SALESMAN',7698,'1981-02-20',1600,300,
 (7902,'FORD','ANALYST',7566,'1981-12-03',3000,null,20),
 (7934,'MILLER','CLERK',7782,'1982-01-23',1300,null,10)
 
---        ASSIGNMENT QUESTIONS
+
+----------------------------------------------------------------------------------------
+ --               ASSIGNMENT QUESTIONS                         --
 
 -- 1. List all employees whose name begins with 'A'. 
 select * from table_Emp where EName like 'A%'
 
+
 -- 2. Select all those employees who don't have a manager. 
 select * from table_Emp where MgrId is null;
 
+
 -- 3. List employee name, number and salary for those employees who earn in the range 1200 to 1400.
 select EmpNo, EName, Salary from table_Emp where Salary between 1200 and 1400
+
 
 -- 4. Give all the employees in the RESEARCH department a 10% pay rise. Verify that this has been done by listing all their details before and after the rise. 
    -- before altering
@@ -77,13 +77,16 @@ select EmpNo, EName, Salary from table_Emp where Salary between 1200 and 1400
    select * from table_Emp
    where DeptNo = (Select DeptNo from table_Dept where DName='Research')
 
+
 -- 5. Find the number of CLERKS employed. Give it a descriptive heading. 
    select count(*) as 'Number of Clerk' from table_Emp 
    where job='CLERK'
 
+
 -- 6. Find the average salary for each job type and the number of people employed in each job. 
    select Job, Count(*), Avg(Salary) as 'Average Salary' from table_Emp
    group by Job
+
 
 -- 7. List the employees with the lowest and highest salary. 
    select * from table_Emp
@@ -94,10 +97,12 @@ select EmpNo, EName, Salary from table_Emp where Salary between 1200 and 1400
    select * from table_Dept
    where DeptNo not in (select DeptNo from table_Emp)
 
+
 -- 9. Get the names and salaries of all the analysts earning more than 1200 who are based in department 20. Sort the answer by ascending order of name. 
    select EName, Salary from table_Emp
    where Job='ANALYST' and Salary > 1200 and DeptNo = 20
    order by EName
+
 
 -- 10. For each department, list its name and number together with the total salary paid to employees in that department. 
    select e.DeptNo, d.Dname, sum(e.Salary) as 'Total Salary'
@@ -110,14 +115,17 @@ select EmpNo, EName, Salary from table_Emp where Salary between 1200 and 1400
    select Ename, Salary from table_Emp
    where EName in ('MILLER','SMITH')
 
+
 -- 12. Find out the names of the employees whose name begin with ‘A’ or ‘M’. 
    select EName from table_Emp
    where EName like '[AM]%'
+
 
 -- 13. Compute yearly salary of SMITH. 
    Select EName , Salary*12 as 'Yearly Salary'
    from table_Emp
    where EName='SMITH'
+
 
 -- 14. List the name and salary for all employees whose salary is not in the range of 1500 and 2850. 
    select EName, Salary from table_Emp
